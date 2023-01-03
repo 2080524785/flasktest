@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}搜索结果{% endblock %}
+
+{% block page_content %}
+
+    <script src="../static/js/modernizr.custom.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/picture.css">
+
+    <div class="page-header">
+        <h2>关于 <mark style="font-size: 40px">{{ name }}</mark> 的搜索<small style="float:right;margin-top: 20px"><font size="20">{{ page }}</font>页</small></h2>
+        <div class="row" style="height: 60px">
+            <div class="col-md-8">
+                {% import 'pages.html' as pages %}
+                {{ pages.flask_pages(page, pic_num) }}
+            </div>
+            <div class="col-md-4" style="margin-top: 0px;padding-left: 150px">
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#allModal">下载整页</button>
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#MoreModal">批量下载</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="allModal" tabindex="-1" role="dialog" aria-labelledby="allModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="allModalLabel">
+                        <strong style="color: #0f0f0f">下载</strong>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <strong style="color: #0f0f0f">确认是否下载整页图片？</strong>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="downloadAllPage('{{ name }}', '{{ page }}')" data-dismiss="modal">
+                        确认
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+     <div class="modal fade" id="MoreModal" tabindex="-1" role="dialog" aria-labelledby="moreModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="moreModalLabel">
+                        <strong style="color: #0f0f0f">下载</strong>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form id="numform">
+                      <div class="form-group">
+                        <label for="number" class="control-label" style="color: #0f0f0f">请输入获取图片数量(<=300):</label>
+                        <input type="text" class="form-control" id="number" placeholder="0">
+                      </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                    </button>
+                    <button type="button" form="numform" class="btn btn-primary" onclick="downloadMore('{{ name }}', {{ pic_url_ls }})" data-dismiss="modal">
+                        确认
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <div class="container">
+        <div class="row">
+            {%  for pic in pic_ls %}
+                <div class="col-md-4" style="margin-top:15px;margin-bottom:15px">
+
+                    <ul class="grid cs-style-3">
+                        <li>
+                            <figure>
+                                <img id="{{ name }}_{{ page }}_{{ loop.index }}" src="{{ pic['url'] }}" name="{{ pic['title'] }}" alt="{{ pic['title'] }}" class="img-rounded" style="float: left;width: 360px;height: 270px;">
+                                <figcaption>
+                                    <h4>{{ pic['title'] }}</h4>
+                                    <span>Somebody</span>
+                                    <button type="button" onclick="downloadImg('{{ name }}', '{{ page }}', '{{ loop.index }}', '{{ pic['title'] }}')" style="float: right">下载</button>
+                                </figcaption>
+                            </figure>
+                        </li>
+                    </ul>
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

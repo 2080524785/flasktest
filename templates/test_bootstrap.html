@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}首页{% endblock %}
+
+{% block page_content %}
+{#    图片轮播css引用    #}
+    <link rel="stylesheet" href="../static/css/picture_show.css">
+
+    <div class="page-header">
+        <h1>Hello!</h1>
+        <form class="form-inline" action="/crawler/1" method="POST">
+            <div class="form-group">
+                <label class="sr-only" for="word">Word input</label>
+                <input type="text" class="form-control" id="word" name="word" placeholder="输入想寻找的图片" style="width: 400px;height: 40px">
+            </div>
+          <button type="submit" class="btn btn-primary" style="height: 40px">Search</button>
+        </form>
+    </div>
+    <div id="container">
+        <div id="photo">
+            <img src="../static/test1.png" />
+            <img src="../static/test2.png" />
+            <img src="../static/test3.png" />
+            <img src="../static/test1.png" />
+        </div>
+    </div>
+
+{% endblock %}

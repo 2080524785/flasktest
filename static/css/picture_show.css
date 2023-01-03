@@ -1,0 +1,45 @@
+#container {
+	width: 400px;
+	height: 400px;
+	overflow: hidden;
+}
+
+#photo {
+	width: 1600px;
+	animation: switch 7s ease-out infinite;
+}
+
+#photo > img {
+	float: left;
+	width: 400px;
+	height: 300px;
+}
+
+.divContent{
+			width:200px;
+			height: 200px;
+			border:1px solid #ff5857;
+			overflow:hidden;
+		}
+.divContent img{
+			margin:0;
+			padding:0;
+			width:100%;
+			height: 100%;
+			object-fit: cover;//重要
+		}
+
+@keyframes switch {
+	0%,16%{
+		margin-left: 0;
+	}
+	28%,44% {
+		margin-left: -400px;
+	}
+	56%,72% {
+		margin-left: -800px;
+	}
+	84%,100% {
+		margin-left: -1200px;
+	}
+}
